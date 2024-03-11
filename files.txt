@@ -8,6 +8,7 @@
 .local/bin/setbg
 .local/bin/displayselect
 .zprofile
+.profile
 .xprofile
 .xinitrc
 .config/aliasrc
