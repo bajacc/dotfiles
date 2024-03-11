@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+from typing import List
+import shutil
+import argparse
+import sys
+from enum import Enum
+
+class Command(str, Enum):
+    INSTALL = 'install'
+    SYNC = 'sync'
+
+REPO_DOTFILES_PATH = Path(__file__).resolve().parent / Path('home')
+
+def parse_path() -> List[Path]:
+    with open('files.txt', 'r', encoding='utf-8') as f:
+        return [Path.home() / Path(p) for p in f.read().split()]
+
+def to_repo_path(paths: List[Path]) -> List[Path]:
+    return [REPO_DOTFILES_PATH / path.relative_to(Path.home()) for path in paths]
+
+def copy(srcs: List[Path], dsts: List[Path]):
+    for src, dst in zip(srcs, dsts):
+        print(f"copy {src} to {dst}")
+        if not src.exists():
+            raise FileNotFoundError(src)
+        elif src.is_dir():
+            shutil.copytree(src, dst, dirs_exist_ok=True)
+        elif src.is_file():
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+        else:
+            raise NotImplementedError(f"{src} is neither a directory nor a file")
+    
+def parse_args():
+    parser = argparse.ArgumentParser(description='Dotfiles utility')
+    subparsers = parser.add_subparsers(dest='command', help='Sub-command help')
+    parser_install = subparsers.add_parser(Command.INSTALL, help='Install dotfiles')
+    parser_sync = subparsers.add_parser(Command.SYNC, help='Sync dotfiles')
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    real_paths = parse_path()
+    repo_paths = to_repo_path(real_paths)
+    if args.command == Command.INSTALL:
+        copy(repo_paths, real_paths)
+    elif args.command == Command.SYNC:
+        shutil.rmtree(REPO_DOTFILES_PATH, ignore_errors=True)
+        copy(real_paths, repo_paths)

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd $XDG_SRC_HOME/dwm
+make && sudo make install && kill $(pidof dwm)
+

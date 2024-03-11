@@ -1,0 +1,14 @@
+.local/bin/dwm/
+.local/bin/statusbar/
+.local/bin/dmenumount
+.local/bin/dmenuumount
+.local/bin/dmenuunicode
+.local/bin/dmenupics
+.local/bin/start-alacritty
+.local/bin/setbg
+.local/bin/displayselect
+.zprofile
+.xprofile
+.xinitrc
+.config/aliasrc
+.config/zsh/.zshrc

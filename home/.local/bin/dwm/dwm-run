@@ -1,0 +1,11 @@
+#!/bin/sh
+
+while :
+do
+    dwmblocks
+done &
+
+while :
+do
+    dwm
+done

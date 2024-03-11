@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+import os
+import tempfile
+import subprocess
+import random
+import sys
+
+# Create a temporary file
+with tempfile.NamedTemporaryFile(delete=False, mode='w+') as temp_file:
+    conf_path = temp_file.name
+    
+    # Set up a trap to delete the temporary file on exit
+    def clean_up():
+        os.remove(conf_path)
+    
+    # Generate a random color
+    rand = random.randrange(0, 16)
+    color = f"#{rand:02x}{rand:02x}{rand:02x}"
+    
+    # Choose a number between 0.7 and 0.95
+    opacity = f"{random.uniform(0.7, 0.95):.2f}"
+    
+    # Write config file
+    config_content = f"""
+[window]
+opacity = {opacity}
+
+[colors.primary]
+background = '{color}'
+
+[font]
+size = 8.0
+
+[keyboard]
+bindings = [
+{{ key = "C", mods =  "Alt", action = "Copy" }},
+{{ key = "V", mods =  "Alt", action = "Paste" }},
+]
+"""
+    temp_file.write(config_content)
+    temp_file.flush()  # Ensure all data is written to the file
+
+    # Print the content of the config file
+    with open(conf_path, 'r') as file:
+        print(file.read())
+
+    # Start alacritty with the temp config file
+    try:
+        subprocess.run(["alacritty", "--config-file", conf_path] + sys.argv[1:])
+    finally:
+        os.remove(conf_path)

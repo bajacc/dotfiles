@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Prints the current light volume.
+
+
+light=$(xbacklight -get)
+icon=""
+
+printf "%s %.0f%%\n" $icon $light

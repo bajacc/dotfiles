@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# This is bound to Mod+PrintScreen by default, requires maim.
+
+case "$(printf "a selected area\\ncurrent window\\nfull screen" | dmenu -l 3 -i -p "Screenshot which area?")" in
+	"a selected area")
+		PIC_NAME=$XDG_SCREENSHOT_DIR/pic-selected-"$(date '+%y%m%d-%H%M-%S').png" 
+		maim -s $PIC_NAME
+		dragon-drop $PIC_NAME
+	;;
+
+	"current window") 
+		WINDOW_ID="$(xdotool getactivewindow)" 
+		PIC_NAME=$XDG_SCREENSHOT_DIR/pic-window-"$(date '+%y%m%d-%H%M-%S').png"
+		maim -i $WINDOW_ID $PIC_NAME
+		dragon-drop $PIC_NAME
+	;;
+	"full screen") 
+		PIC_NAME=$XDG_SCREENSHOT_DIR/pic-full-"$(date '+%y%m%d-%H%M-%S').png"
+		maim $PIC_NAME
+		dragon-drop $PIC_NAME
+	;;
+esac
