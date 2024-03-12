@@ -26,10 +26,10 @@ def copy(srcs: List[Path], dsts: List[Path]):
         if not src.exists():
             raise FileNotFoundError(src)
         elif src.is_dir():
-            shutil.copytree(src, dst, dirs_exist_ok=True)
+            shutil.copytree(src, dst, dirs_exist_ok=True, symlinks=True)
         elif src.is_file():
             dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(src, dst)
+            shutil.copy2(src, dst, follow_symlinks=False)
         else:
             raise NotImplementedError(f"{src} is neither a directory nor a file")
     

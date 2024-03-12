@@ -11,5 +11,7 @@
 .profile
 .xprofile
 .xinitrc
+.env
 .config/aliasrc
+.config/pacman/pacman.conf
 .config/zsh/.zshrc
