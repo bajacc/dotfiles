@@ -42,7 +42,9 @@ def install(repo_paths: List[Path], force: bool):
     for repo_path in repo_paths:
         real_path = repo_to_real_path(repo_path)
         if is_installed(repo_path, real_path):
+            print(f"{real_path} already installed")
             continue
+        
         print(f"link {real_path} to {repo_path}")
         if real_path.is_file() or real_path.is_symlink():
             real_path.unlink(missing_ok=True)
