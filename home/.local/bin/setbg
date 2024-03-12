@@ -6,15 +6,15 @@
 #	If given a directory, choose random file in it.
 
 # Location of link to wallpaper link.
-bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
 arg="$1"
 if [ -z "$1" ]
 then
     arg="$XDG_WALLPAPER_DIR"
 fi
 
-[ -f "$arg" ] && ln -sf "$(readlink -f "$arg")" "$bgloc" && notify-send -i "$bgloc" "Changing wallpaper..."
-
-[ -d "$arg" ] && ln -sf "$(find "$(readlink -f "$arg")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc" && notify-send -i "$bgloc" "Random Wallpaper chosen."
-
-xwallpaper --zoom "$bgloc"
+bgloc=$arg
+if [ -d "$bgloc" ]
+then
+    bgloc="$(find "$(readlink -f "$arg")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)"
+fi
+[ -f "$bgloc" ] && notify-send -i "$bgloc" "Wallpaper" && xwallpaper --zoom "$bgloc"
