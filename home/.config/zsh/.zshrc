@@ -54,15 +54,23 @@ bindkey '^[[P' delete-char
 
 setopt histignoredups
 
-# Load syntax highlighting; should be last.
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+if [[ ! -f $XDG_CONFIG_HOME/zinit/bin/zinit.zsh ]]; then
+  print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
+  command mkdir -p $XDG_CONFIG_HOME/zinit
+  command git clone https://github.com/zdharma-continuum/zinit  $XDG_CONFIG_HOME/zinit/bin && \
+  print -P "%F{33}▓▒░ %F{34}Installation successful.%F" || \
+  print -P "%F{160}▓▒░ The clone has failed.%F"
+fi
+source "$XDG_CONFIG_HOME/zinit/bin/zinit.zsh"
 
-# command alias reminder
-source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh 2>/dev/null
+# Fast Syntax Highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
+# Zsh You Should Use
+zinit light MichaelAquilina/zsh-you-should-use
 
+# Zsh Autosuggestions
+zinit light zsh-users/zsh-autosuggestions
+
+# Bindkey setup remains the same, as it's a Zsh builtin configuration, not plugin specific
 bindkey '^[	' autosuggest-accept
-
-# find repos for program
-source /usr/share/doc/pkgfile/command-not-found.zsh 2>/dev/null
