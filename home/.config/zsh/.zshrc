@@ -21,6 +21,10 @@ precmd() { echo -ne "\e[6 q" }
 autoload -U compinit
 zstyle ':completion:*' menu select
 
+eval "$(fzf --zsh)"
+export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
@@ -36,23 +40,24 @@ lfcd () {
     fi
 }
 bindkey -s '^[o' 'lfcd\n'
-
 bindkey -s '^[a' 'bc -l\n'
-
-bindkey -s '^[f' 'cd "$(dirname "$(fzf)")"\n'
 bindkey -s '^[n' 'rax2 -r "$(xclip -o)"\n'
-
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
-bindkey "^R" history-incremental-search-backward
-
 bindkey '^[[H' beginning-of-line
 bindkey '^[[4~' end-of-line
 bindkey '^H' backward-delete-word
-
 bindkey '^[[P' delete-char
+# Move cursor to the end of the line with Alt+Right
+bindkey '^[^[[C' end-of-line
+# Move cursor to the start of the line with Alt+Left
+bindkey '^[^[[D' beginning-of-line
+bindkey -s '^[f' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
 
 setopt histignoredups
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_SPACE     # Ignore commands that start with a space.
+setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
 
 if [[ ! -f $XDG_CONFIG_HOME/zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
