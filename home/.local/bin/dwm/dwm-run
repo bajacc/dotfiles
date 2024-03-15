@@ -1,11 +1,13 @@
 #!/bin/sh
 
+mkdir -p ~/.log
+
 while :
 do
-    dwmblocks
+    dwmblocks > ~/.log/dwmblock.log 2>&1
 done &
 
 while :
 do
-    dwm
+    dwm > ~/.log/dwm.log 2>&1
 done

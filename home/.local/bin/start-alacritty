@@ -30,20 +30,18 @@ opacity = {opacity}
 background = '{color}'
 
 [font]
-size = 8.0
+size = 10.0
 
 [keyboard]
 bindings = [
-{{ key = "C", mods =  "Alt", action = "Copy" }},
-{{ key = "V", mods =  "Alt", action = "Paste" }},
+{{ key = "C", mods =  "Command", action = "Copy" }},
+{{ key = "V", mods =  "Command", action = "Paste" }},
+{{ key = "Return", mods = "Command|Shift", action = "SpawnNewInstance" }},
+{{ key = "V", mods = "Control", mode = "~Vi", action = "ToggleViMode" }},
 ]
 """
     temp_file.write(config_content)
     temp_file.flush()  # Ensure all data is written to the file
-
-    # Print the content of the config file
-    with open(conf_path, 'r') as file:
-        print(file.read())
 
     # Start alacritty with the temp config file
     try:

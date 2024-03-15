@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import sys
+from argparse import ArgumentParser
+from xdo import Xdo
+
+def main(keys, exclude):
+    xdo = Xdo()
+    win_id = xdo.get_active_window()
+    current_title =  xdo.get_window_name(win_id).decode('utf-8')
+
+    if all(title.lower() not in current_title.lower() for title in exclude):
+        xdo.send_keysequence_window(0, keys.encode())
+
+if __name__ == "__main__":
+    parser = ArgumentParser(description="Press specified keys if the current active window is not in the exclude list.")
+    parser.add_argument("keys", type=str, help="Keys to press if the window is not in the exclude list.")
+    parser.add_argument("--exclude", nargs='*', default=[], help="List of window titles to exclude.")
+    args = parser.parse_args()
+
+    main(args.keys, args.exclude)

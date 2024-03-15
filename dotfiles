@@ -15,7 +15,7 @@ REPO_DOTFILES_PATH = Path(__file__).resolve().parent / Path('home')
 
 def parse_path() -> List[Path]:
     with open('files.txt', 'r', encoding='utf-8') as f:
-        return [REPO_DOTFILES_PATH / Path(p) for p in f.read().split()]
+        return [REPO_DOTFILES_PATH / Path(p) for p in f.read().split('\n')]
 
 def is_installed(repo_path: Path, real_path: Path) -> bool:
     return real_path.is_symlink() and real_path.readlink() == repo_path

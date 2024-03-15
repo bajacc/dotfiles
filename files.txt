@@ -7,6 +7,7 @@
 .local/bin/start-alacritty
 .local/bin/setbg
 .local/bin/displayselect
+.local/bin/presskey
 .zprofile
 .profile
 .xprofile
@@ -15,3 +16,5 @@
 .config/aliasrc
 .config/pacman/pacman.conf
 .config/zsh/.zshrc
+.config/pip/pip.conf
+.config/Code - OSS/User/keybindings.json

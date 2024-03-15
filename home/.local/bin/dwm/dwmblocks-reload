@@ -1,4 +1,3 @@
 #!/bin/sh
 
-cd $XDG_SRC_HOME/dwmblocks
-make && sudo make install && kill $(pidof dwmblocks)
+cd "$XDG_SRC_HOME/dwmblocks" && make && sudo make install && kill "$(pidof dwmblocks)"
