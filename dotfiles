@@ -5,9 +5,8 @@ from typing import List
 import shutil
 import argparse
 import sys
-from enum import Enum
 
-class Command(str, Enum):
+class Command:
     INSTALL = 'install'
     SYNC = 'sync'
 

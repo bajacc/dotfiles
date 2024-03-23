@@ -1,7 +1,6 @@
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
 setopt prompt_subst
@@ -10,6 +9,7 @@ setopt prompt_subst
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.cache/zsh/history
+setopt SHARE_HISTORY
 
 # Load aliases and shortcuts if existent.
 [ -f "$XDG_CONFIG_HOME/aliasrc" ] && source "$XDG_CONFIG_HOME/aliasrc"
@@ -23,23 +23,12 @@ zstyle ':completion:*' menu select
 
 eval "$(fzf --zsh)"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
-export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+export FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp" >/dev/null
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-bindkey -s '^[o' 'lfcd\n'
 bindkey -s '^[a' 'bc -l\n'
 bindkey -s '^[n' 'rax2 -r "$(xclip -o)"\n'
 bindkey '^[[1;5D' backward-word
