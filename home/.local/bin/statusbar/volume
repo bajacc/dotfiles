@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # Prints the current volume or muted if muted.
 
