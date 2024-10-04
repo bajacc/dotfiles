@@ -10,7 +10,11 @@
 
 [ -n "$XTERM_VERSION" ] && transset-df --id "$WINDOWID" >/dev/null
 
-. ~/.xprofile
+xcompmgr &		# xcompmgr for transparency
+dunst & 		# dunst for notifications
+xset r rate 300 50 &	# Speed xrate up (power management?)
+unclutter &		# Remove mouse when idle
+setbg & 		# set the background with the `setbg` script
 
 # Comment/uncomment these lines depending on what wm you want to use. Also
 # check the i3blocks line above.
