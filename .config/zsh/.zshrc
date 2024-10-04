@@ -8,7 +8,7 @@ setopt prompt_subst
 # History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
-HISTFILE=~/.cache/zsh/history
+HISTFILE="$XDG_DATA_HOME/zsh/history"
 setopt SHARE_HISTORY
 
 # Load aliases and shortcuts if existent.
