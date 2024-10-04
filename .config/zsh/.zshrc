@@ -8,11 +8,11 @@ setopt prompt_subst
 # History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
+mkdir -p "$XDG_DATA_HOME/zsh/"
 HISTFILE="$XDG_DATA_HOME/zsh/history"
-setopt SHARE_HISTORY
 
-# Load aliases and shortcuts if existent.
-[ -f "$XDG_CONFIG_HOME/aliasrc" ] && source "$XDG_CONFIG_HOME/aliasrc"
+# Load aliases.
+source "$XDG_CONFIG_HOME/aliasrc"
 
 # cursor
 precmd() { echo -ne "\e[6 q" }
