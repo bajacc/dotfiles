@@ -1,0 +1,18 @@
+[colors.primary]
+background = "#101010"
+
+[font]
+size = 10
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Alt"
+
+[window]
+opacity = 0.8
