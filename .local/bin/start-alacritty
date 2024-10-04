@@ -5,45 +5,24 @@ import tempfile
 import subprocess
 import random
 import sys
+import toml
+from pathlib import Path
 
-# Create a temporary file
-with tempfile.NamedTemporaryFile(delete=False, mode='w+') as temp_file:
-    conf_path = temp_file.name
-    
-    # Set up a trap to delete the temporary file on exit
-    def clean_up():
-        os.remove(conf_path)
-    
-    # Generate a random color
-    rand = random.randrange(0, 16)
-    color = f"#{rand:02x}{rand:02x}{rand:02x}"
-    
-    # Choose a number between 0.7 and 0.95
-    opacity = f"{random.uniform(0.7, 0.95):.2f}"
-    
-    # Write config file
-    config_content = f"""
-[window]
-opacity = {opacity}
+config_home = Path(os.getenv('XDG_CONFIG_HOME', Path.home() / '.config'))
+alacritty_config_path = config_home / "alacritty" / "alacritty.toml"
 
-[colors.primary]
-background = '{color}'
+rand = random.randrange(0, 16)
+color = f"#{rand:02x}{rand:02x}{rand:02x}"
+opacity = random.uniform(0.7, 0.95)
 
-[font]
-size = 10.0
+with open(alacritty_config_path, 'r') as file:
+    data = toml.load(file)
 
-[keyboard]
-bindings = [
-#{{ key = "C", mods =  "Command", action = "Copy" }},
-#{{ key = "V", mods =  "Command", action = "Paste" }},
-{{ key = "Return", mods = "Command|Shift", action = "SpawnNewInstance" }},
-]
-"""
-    temp_file.write(config_content)
-    temp_file.flush()  # Ensure all data is written to the file
+data['window']['opacity'] = opacity
+data['colors']['primary']['background'] = color
 
-    # Start alacritty with the temp config file
-    try:
-        subprocess.run(["alacritty", "--config-file", conf_path] + sys.argv[1:])
-    finally:
-        os.remove(conf_path)
+# Write the updated data back to the TOML file
+with tempfile.NamedTemporaryFile(delete=True, mode='w+') as temp_file:
+    toml.dump(data, temp_file)
+    temp_file.flush()
+    subprocess.run(["alacritty", "--config-file", temp_file.name] + sys.argv[1:])
