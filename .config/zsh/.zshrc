@@ -47,6 +47,8 @@ setopt histignoredups
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE     # Ignore commands that start with a space.
 setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 
 if [[ ! -f $XDG_CONFIG_HOME/zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
