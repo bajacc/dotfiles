@@ -33,7 +33,6 @@ call plug#begin(stdpath('data') . '/plugged')
  Plug 'dracula/vim'
  Plug 'morhetz/gruvbox'
  Plug 'ryanoasis/vim-devicons'
- Plug 'morhetz/gruvbox'
  Plug 'SirVer/ultisnips'
  Plug 'honza/vim-snippets'
  Plug 'scrooloose/nerdtree'
