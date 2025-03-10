@@ -7,7 +7,7 @@ cd dotfiles
 stow . -t $HOME
 ```
 
-### find brocken links
+### find broken links
 
 ```console
 find $HOME -xtype l -exec ls -l {} \;
