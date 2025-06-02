@@ -50,6 +50,18 @@ setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 
+if command -v kubectl &>/dev/null; then
+    source <(kubectl completion zsh)
+fi
+
+if command -v podman &>/dev/null; then
+    source <(podman completion zsh)
+fi
+
+if command -v docker &>/dev/null; then
+    source <(docker completion zsh)
+fi
+
 if [[ ! -f $XDG_CONFIG_HOME/zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
   command mkdir -p $XDG_CONFIG_HOME/zinit

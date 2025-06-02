@@ -9,5 +9,7 @@ dunst & 		# dunst for notifications
 xset r rate 200 50	# Speed xrate up
 unclutter &		# Remove mouse when idle
 setbg & 		# set the background with the `setbg` script
+fcitx5 &		# start chinese typing system
+
 
 ssh-agent dwm-run
