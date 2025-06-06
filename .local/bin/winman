@@ -1,0 +1,156 @@
+#!/bin/bash
+
+LOGDIR="$HOME/.local/state/winman"
+CACHEDIR="$HOME/.cache/winman"
+
+LOGFILE="$HOME/.local/state/winman/winman.log"
+WMFILE="$HOME/.cache/winman/wm"
+DWMXINITRC="$HOME/.cache/winman/dwm-xinitrc"
+DWMDIR="$HOME/code/dwm"
+DWLDIR="$HOME/code/dwl"
+
+install_dwm() {
+    echo "installing dwm" 
+    cd "$DWMDIR"
+    cp -f config.def.h config.h
+    sudo make clean install
+}
+
+install_dwl() {
+    echo "installing dwl" 
+    cd "$DWLDIR"
+    cp -f config.def.h config.h
+    sudo make clean install
+}
+
+install() {
+    install_dwl
+    install_dwm
+}
+
+switch() {
+    local wm="$1"
+    echo "$wm" > "$WMFILE"
+    pkill -x dwm
+    pkill -x dwl
+}
+
+run_dwm() {
+    echo "[INFO] Starting dwm..." >> $LOGFILE
+
+    [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && eval "$(dbus-launch --sh-syntax)"
+    [ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" >/dev/null
+
+    export XDG_SESSION_TYPE=x11
+    export GDK_BACKEND=auto
+    export QT_QPA_PLATFORM=auto
+    export ELECTRON_OZONE_PLATFORM_HINT=auto
+
+    cat > "$DWMXINITRC" <<EOF
+#!/bin/bash
+[ -n "\$XTERM_VERSION" ] && transset-df --id "\$WINDOWID" >/dev/null
+xset r rate 200 50
+xcompmgr &
+unclutter &
+setbg &
+fcitx5 &
+dunst &
+dwmblocks &
+exec dwm >> "$LOGFILE" 2>&1
+EOF
+
+    chmod +x "$DWMXINITRC"
+    startx "$DWMXINITRC"
+}
+
+run_dwl() {
+    echo "[INFO] Starting dwl..." >> "$LOGFILE"
+
+    # Start ssh-agent if needed
+    [ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" >/dev/null
+
+    # windows session
+    export XDG_SESSION_TYPE=wayland
+    export GDK_BACKEND=wayland
+    export QT_QPA_PLATFORM=wayland
+    export ELECTRON_OZONE_PLATFORM_HINT=wayland
+
+    fcitx5 &
+    dunst &
+
+    dwl >> "$LOGFILE" 2>&1
+}
+
+run() {
+    switch "$1"
+    while :
+    do
+        local wm=$(cat "$WMFILE")
+        case "$wm" in
+            dwm)
+                run_dwm
+                ;;
+            dwl)
+                run_dwl
+                ;;
+            none)
+                exit 0
+                ;;
+            *)
+                exit 1
+                ;;
+        esac
+        sleep 0.2
+    done
+}
+
+print_help() {
+    cat <<EOF
+Usage: $(basename "$0") <command> [args]
+
+Commands:
+  run [dwm|dwl]       Start the selected window manager. If none is given, uses the last one set.
+  switch [dwm|dwl]    Switch to the specified window manager and restart it.
+  quit                Stop the running window manager.
+  reload              Restart the currently active window manager.
+  install             Build and install both dwm and dwl from source.
+
+Examples:
+  $(basename "$0") switch dwm      # Switch to dwm and restart it
+  $(basename "$0") run             # Run the last selected window manager
+  $(basename "$0") install         # Build and install both dwm and dwl
+  $(basename "$0") quit            # Quit the current window manager
+
+EOF
+    exit 1
+}
+
+main() {
+    mkdir -p "$LOGDIR"
+    mkdir -p "$CACHEDIR"
+
+    case "$1" in
+        run)
+            run "$2"
+            ;;
+        switch)
+            switch "$2"
+            ;;
+        quit)
+            switch none
+            ;;
+        install)
+            install
+            ;;
+        reload)
+            local curr_wm=$(cat "$WMFILE")
+            switch "$curr_wm"
+            ;;
+        *)
+            print_help
+            ;;
+    esac
+}
+
+main "$@"
+exit 0
