@@ -1,0 +1,4 @@
+#!/bin/sh
+
+file="$1"   
+bat --style=numbers --color=always --line-range :500 "$file"

@@ -4,14 +4,14 @@
 
 ```console
 cd dotfiles
-stow arch -t $HOME
+stow --no-folding arch -t $HOME
 ```
 
 ### deploy the dotfiles on mac
 
 ```console
 cd dotfiles
-stow arch -t $HOME
+stow --no-folding mac -t $HOME
 ```
 
 ### find broken links

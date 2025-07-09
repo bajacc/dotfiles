@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Verbosity and settings that you pretty much just always are going to want.
+alias \
+	cp="cp -v" \
+	mv="mv -v" \
+	rm="rm -vI" \
+	mkd="mkdir -pv" \
+	yt="youtube-dl --add-metadata -i" \
+	yta="yt -x -f bestaudio/best" \
+	ffmpeg="ffmpeg -hide_banner" \
+	vim="nvim" \
+
+# Colorize commands when possible.
+alias \
+	ls="ls -hG" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi"
+
+alias \
+	tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf" \
+	
+
+alias mapscii="telnet mapscii.me"
