@@ -1,10 +1,17 @@
 # bajac's dotfiles
 
-### deploy the dotfiles
+### deploy the dotfiles on arch
 
 ```console
 cd dotfiles
-stow . -t $HOME
+stow arch -t $HOME
+```
+
+### deploy the dotfiles on mac
+
+```console
+cd dotfiles
+stow arch -t $HOME
 ```
 
 ### find broken links
