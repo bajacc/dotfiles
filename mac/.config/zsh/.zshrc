@@ -1,3 +1,6 @@
+source ~/.config/aliasrc
+source ~/.config/envrc
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -16,11 +19,6 @@ SAVEHIST=10000000
 mkdir -p "$ZDOTDIR"
 HISTFILE="$ZDOTDIR/history"
 
-# Load custom aliases and environment variables:
-
-# cursor
-precmd() { echo -ne "\e[6 q" }
-
 # Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
@@ -33,19 +31,16 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-bindkey -s '^[a' 'bc -l\n'
-bindkey -s '^[n' 'rax2 -r "$(xclip -o)"\n'
+bindkey -s '^A' 'bc -l\n'
+bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
 bindkey '^[[H' beginning-of-line
-bindkey '^[[4~' end-of-line
-bindkey '^H' backward-delete-word
-bindkey '^[[P' delete-char
-# Move cursor to the end of the line with Alt+Right
-bindkey '^[^[[C' end-of-line
-# Move cursor to the start of the line with Alt+Left
-bindkey '^[^[[D' beginning-of-line
-bindkey -s '^[f' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
+bindkey '^[[F' end-of-line
+bindkey '^[[3~' backward-kill-line
+bindkey -s '^F' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
 
 setopt histignoredups
 setopt SHARE_HISTORY
