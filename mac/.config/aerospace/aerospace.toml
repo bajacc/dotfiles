@@ -60,12 +60,12 @@ cmd-1 = 'workspace 1'  # Terminal
 cmd-2 = 'workspace 2'  # Browser
 cmd-3 = 'workspace 3'  # VSCode
 cmd-4 = 'workspace 4'  # Obsidian
-cmd-5 = 'workspace 5'  # Chat
-cmd-6 = 'workspace 6'  # Settings
+cmd-5 = 'workspace 5'  # Chat (slack, Discord, etc.)
+cmd-6 = 'workspace 6'  # Teams
 cmd-7 = 'workspace 7'  # 
 cmd-8 = 'workspace 8'  # 
 cmd-9 = 'workspace 9'  # 
-cmd-0 = 'workspace 10' # 
+cmd-0 = 'workspace 10' # Settings
 
 cmd-shift-1 = 'move-node-to-workspace 1'
 cmd-shift-2 = 'move-node-to-workspace 2'
@@ -117,17 +117,31 @@ run = [
   'move-node-to-workspace 3'
 ]
 
-# System Setting in Workspace 6
-[[on-window-detected]]
-if.app-id = 'com.apple.systempreferences'
-run = [
-  'move-node-to-workspace 6'
-]
-
 # Obsidian in Workspace 4
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = [
   'layout tiling', 
   'move-node-to-workspace 4'
+]
+
+# Slack in Workspace 5
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = [
+  'move-node-to-workspace 5'
+]
+
+# Teams in Workspace 6
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = [
+  'move-node-to-workspace 6'
+]
+
+# System Setting in Workspace 9
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = [
+  'move-node-to-workspace 9'
 ]
