@@ -19,7 +19,7 @@ alias \
 	ccat="highlight --out-format=ansi"
 
 alias \
-	tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf" \
+	tmux="tmux -f \$XDG_CONFIG_HOME/tmux/tmux.conf" \
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias mapscii="telnet mapscii.me"

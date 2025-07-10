@@ -17,12 +17,12 @@ move_windows_away() {
     local focused_window_id="$1"
     local current_workspace="$2"
     local temp_workspace="temp$current_workspace"
-    
-    echo "Moving other windows from workspace $current_workspace to workspace $temp_workspace"
-    
-    local windows=$(aerospace list-windows --workspace "$current_workspace" --format "%{window-id}")
     local moved_count=0
-    
+    local windows
+
+    echo "Moving other windows from workspace $current_workspace to workspace $temp_workspace"
+    windows=$(aerospace list-windows --workspace "$current_workspace" --format "%{window-id}")
+
     for window_id in $windows; do
         if [ "$window_id" = "$focused_window_id" ]; then
             continue
@@ -31,7 +31,7 @@ move_windows_away() {
         aerospace move-node-to-workspace --window-id "$window_id" "$temp_workspace"
         ((moved_count++))
     done
-    
+
     # Save state for restoration
     echo "Moved $moved_count windows to workspace $temp_workspace"
 }
@@ -40,28 +40,36 @@ move_windows_away() {
 restore_windows() {
     local current_workspace="$1"
     local temp_workspace="temp$current_workspace"
-    local moved_windows=$(aerospace list-windows --workspace "$temp_workspace" --format "%{window-id}")
-    
+    local moved_windows
+
+    moved_windows=$(aerospace list-windows --workspace "$temp_workspace" --format "%{window-id}")
+
     echo "Restoring windows from $temp_workspace to workspace $current_workspace"
-    
+
     local restored_count=0
     for window_id in $moved_windows; do
         echo "Restoring window $window_id to workspace $current_workspace"
         aerospace move-node-to-workspace --window-id "$window_id" "$current_workspace"
         ((restored_count++))
     done
-    
+
     echo "Restored $restored_count windows to workspace $current_workspace"
 }
 
 # Main toggle function
 toggle_fullscreen() {
-    local focused_info=$(get_focused_window)
-    local window_id=$(echo "$focused_info" | cut -d':' -f1)
-    local app_name=$(echo "$focused_info" | cut -d':' -f2)
-    local workspace=$(echo "$focused_info" | cut -d':' -f3)
-    local is_fullscreen=$(echo "$focused_info" | cut -d':' -f4)
-    
+    local focused_info
+    local window_id
+    local app_name
+    local workspace
+    local is_fullscreen
+
+    focused_info=$(get_focused_window)
+    window_id=$(echo "$focused_info" | cut -d':' -f1)
+    app_name=$(echo "$focused_info" | cut -d':' -f2)
+    workspace=$(echo "$focused_info" | cut -d':' -f3)
+    is_fullscreen=$(echo "$focused_info" | cut -d':' -f4)
+
     if [ "$is_fullscreen" = "false" ]; then
         echo "Entering fullscreen mode for $app_name (workspace $workspace)"
         if [ "$app_name" = "Alacritty" ]; then
