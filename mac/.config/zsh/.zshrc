@@ -24,15 +24,12 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 
 eval "$(fzf --zsh)"
-export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
-export FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-bindkey -s '^A' 'bc -l\n'
-bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 bindkey '^[[1;3D' backward-word
@@ -40,6 +37,8 @@ bindkey '^[[1;3C' forward-word
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' backward-kill-line
+bindkey -s '^A' 'bc -l\n'
+bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
 bindkey -s '^F' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
 
 setopt histignoredups
@@ -83,7 +82,11 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+[[ ! -f "$ZDOTDIR/.p10k.zsh" ]] || source "$ZDOTDIR/.p10k.zsh"
 
 # Bindkey setup remains the same, as it's a Zsh builtin configuration, not plugin specific
 bindkey '^[	' autosuggest-accept
+
+# load private configuration
+# This file is not tracked by git, so you can put your private settings here.
+[[ ! -f "$ZDOTDIR/private.zsh" ]] || source "$ZDOTDIR/private.zsh"
