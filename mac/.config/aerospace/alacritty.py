@@ -11,9 +11,11 @@ from pathlib import Path
 config_home = Path(os.getenv('XDG_CONFIG_HOME', Path.home() / '.config'))
 alacritty_config_path = config_home / "alacritty" / "alacritty.toml"
 
-rand = random.randrange(0, 16)
-color = f"#{rand:02x}{rand:02x}{rand:02x}"
-opacity = random.uniform(0.7, 0.95)
+r = random.randrange(0, 4) * 8
+g = random.randrange(0, 4) * 8
+b = random.randrange(0, 4) * 8
+color = f"#{r:02x}{g:02x}{b:02x}"
+opacity = random.uniform(0.7, 0.85)
 
 with open(alacritty_config_path, 'r') as file:
     data = toml.load(file)
