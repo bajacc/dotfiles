@@ -8,6 +8,10 @@ get_focused_window() {
     aerospace list-windows --focused --format "%{window-id}:%{app-name}:%{workspace}:%{window-is-fullscreen}"
 }
 
+get_current_workspace() {
+    aerospace list-windows --focused --format "%{workspace}"
+}
+
 # Function to move other windows away
 move_windows_away() {
     local focused_window_id="$1"
@@ -60,18 +64,27 @@ toggle_fullscreen() {
     
     if [ "$is_fullscreen" = "false" ]; then
         echo "Entering fullscreen mode for $app_name (workspace $workspace)"
-        if [ "$app_name"="Alacritty" ]; then
+        if [ "$app_name" = "Alacritty" ]; then
             move_windows_away "$window_id" "$workspace"
         fi
         aerospace fullscreen
     else
         echo "Exiting fullscreen mode for $app_name"
         aerospace fullscreen
-        if [ $app_name="Alacritty" ]; then
-            restore_windows "$workspace"
-        fi
+        restore_windows "$workspace"
     fi
 }
 
-# Run the toggle function
-toggle_fullscreen
+restore_workspaces() {
+    restore_windows "$(get_current_workspace)"
+}
+
+main() {
+    if [ "$1" = "fullscreen" ]; then
+        toggle_fullscreen
+    elif [ "$1" = "restore" ]; then
+        restore_workspaces
+    fi
+}
+
+main "$@"

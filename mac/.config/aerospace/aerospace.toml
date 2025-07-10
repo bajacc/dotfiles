@@ -15,10 +15,14 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
-cmd-enter = 'exec-and-forget ~/.config/aerospace/alacritty.py'
-cmd-d = 'exec-and-forget ~/.config/aerospace/fullscreen.sh'
+cmd-enter = [
+  'exec-and-forget ~/.config/aerospace/workspace.sh restore',
+  'exec-and-forget ~/.config/aerospace/alacritty.py'
+]
+cmd-r = 'exec-and-forget ~/.config/aerospace/workspace.sh fullscreen'
 
 cmd-q = [
+  'exec-and-forget ~/.config/aerospace/workspace.sh restore',
   'close --quit-if-last-window'
 ]
 
@@ -75,8 +79,7 @@ cmd-shift-9 = 'move-node-to-workspace 9'
 cmd-shift-0 = 'move-node-to-workspace 10'
 
 cmd-shift-r = 'reload-config'
-
-cmd-r = 'mode resize'
+alt-r = 'mode resize'
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -85,6 +88,7 @@ k = 'resize height -50'
 l = 'resize width +50'
 enter = 'mode main'
 esc = 'mode main'
+alt-r = 'mode main'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
