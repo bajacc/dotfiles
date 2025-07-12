@@ -90,6 +90,9 @@ enter = 'mode main'
 esc = 'mode main'
 alt-r = 'mode main'
 
+[gaps]
+outer.top = -2
+
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = [
@@ -100,48 +103,47 @@ run = [
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
 run = [
-  'move-node-to-workspace 1'
+  'move-node-to-workspace --focus-follows-window 1',
 ]
 
 # Chrome in Workspace 2
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = [
-  'move-node-to-workspace 2'
+  'move-node-to-workspace --focus-follows-window 2'
 ]
 
 # VSCode in Workspace 3
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
 run = [
-  'move-node-to-workspace 3'
+  'move-node-to-workspace --focus-follows-window 3'
 ]
 
 # Obsidian in Workspace 4
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = [
-  'layout tiling', 
-  'move-node-to-workspace 4'
+  'move-node-to-workspace --focus-follows-window 4'
 ]
 
 # Slack in Workspace 5
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = [
-  'move-node-to-workspace 5'
+  'move-node-to-workspace --focus-follows-window 5'
 ]
 
 # Teams in Workspace 6
 [[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'
 run = [
-  'move-node-to-workspace 6'
+  'move-node-to-workspace --focus-follows-window 6'
 ]
 
 # System Setting in Workspace 9
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 run = [
-  'move-node-to-workspace 9'
+  'move-node-to-workspace --focus-follows-window 9'
 ]
