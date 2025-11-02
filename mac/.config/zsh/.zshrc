@@ -90,3 +90,6 @@ bindkey '^[	' autosuggest-accept
 # load private configuration
 # This file is not tracked by git, so you can put your private settings here.
 [[ ! -f "$ZDOTDIR/private.zsh" ]] || source "$ZDOTDIR/private.zsh"
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
