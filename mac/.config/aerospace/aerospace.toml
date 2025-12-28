@@ -9,6 +9,18 @@ start-at-login = true
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
+# See: https://nikitabobko.github.io/AeroSpace/guide#layouts
+# The 'accordion-padding' specifies the size of accordion padding
+# You can set 0 to disable the padding feature
+accordion-padding = 0
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
 
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
@@ -16,8 +28,10 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
 cmd-enter = [
+  'layout tiles',
+  'layout horizontal',
   'exec-and-forget ~/.config/aerospace/workspace.sh restore',
-  'exec-and-forget ~/.config/aerospace/alacritty.py'
+  'exec-and-forget ~/.config/aerospace/alacritty.sh'
 ]
 cmd-r = 'exec-and-forget ~/.config/aerospace/workspace.sh fullscreen'
 
@@ -91,7 +105,12 @@ esc = 'mode main'
 alt-r = 'mode main'
 
 [gaps]
-outer.top = -2
+    inner.horizontal = 0
+    inner.vertical =   0
+    outer.left =       0
+    outer.bottom =     0
+    outer.top =        -2
+    outer.right =      0
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
