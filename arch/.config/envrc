@@ -1,0 +1,39 @@
+#!/bin/sh
+
+
+# ~/ Clean-up:
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+export XDG_DOWNLOAD_DIR="$HOME/dl"
+export XDG_DOCUMENTS_DIR="$HOME/dox"
+export XDG_PICTURES_DIR="$HOME/pix"
+export XDG_MUSIC_DIR="$HOME/music"
+export XDG_VIDEOS_DIR="$HOME/vids"
+export XDG_WALLPAPER_DIR="$XDG_PICTURES_DIR/wallpaper"
+export XDG_SCREENSHOT_DIR="$XDG_PICTURES_DIR/screenshot"
+export XDG_CODE_DIR="$HOME/code"
+
+# Default programs:
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+export BROWSER="chrome"
+export READER="atril"
+
+# applications specific settings:
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export GOPATH="$XDG_DATA_HOME/go"
+export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
+
+# Adds to $PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$GOROOT/bin:$PATH"
+
+# use GNU tar by default
+export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
