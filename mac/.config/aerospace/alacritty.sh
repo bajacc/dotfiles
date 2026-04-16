@@ -9,11 +9,10 @@ SCRIPT="$HOME/.config/aerospace/alacritty.py"
 if [ ! -x "$VENV_PY" ]; then
     echo "[+] Creating venv at $VENV_DIR"
     python3 -m venv "$VENV_DIR"
-
-    echo "[+] Installing dependencies"
-    "$VENV_PY" -m pip install --upgrade pip
-    "$VENV_PY" -m pip install toml
 fi
+echo "[+] Ensuring dependencies"
+"$VENV_PY" -m pip install --upgrade pip
+"$VENV_PY" -m pip install toml
 
 # Replace shell with the script (no extra process)
 exec "$VENV_PY" "$SCRIPT" "$@"
