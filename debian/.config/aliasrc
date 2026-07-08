@@ -11,13 +11,20 @@ alias \
 
 # Colorize commands when possible.
 alias \
-	ls="ls -hG" \
+	ls="ls -h --color=auto" \
 	grep="grep --color=auto" \
+	fgrep="fgrep --color=auto" \
+	egrep="egrep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi"
+
+# ls shortcuts
+alias \
+	ll="ls -alF" \
+	la="ls -A" \
+	l="ls -CF"
 
 alias \
 	tmux="tmux -f \$XDG_CONFIG_HOME/tmux/tmux.conf" \
 
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias mapscii="telnet mapscii.me"

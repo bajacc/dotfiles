@@ -1,17 +1,18 @@
 source ~/.config/aliasrc
 source ~/.config/envrc
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# set variable identifying the chroot you work in (used in the prompt below)
+if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]]; then
+  debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
 setopt interactive_comments
 setopt prompt_subst
+
+# Fancy prompt, styled after the default Debian bashrc:
+PROMPT='${debian_chroot:+($debian_chroot)}%F{green}%n@%m%f:%F{blue}%~%f%# '
 
 # History in cache directory:
 HISTSIZE=10000000
@@ -23,8 +24,10 @@ HISTFILE="$ZDOTDIR/history"
 autoload -U compinit
 zstyle ':completion:*' menu select
 
-eval "$(fzf --zsh)"
-FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+if command -v fzf &>/dev/null; then
+    eval "$(fzf --zsh)"
+    FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+fi
 
 zmodload zsh/complist
 compinit
@@ -37,9 +40,6 @@ bindkey '^[[1;3C' forward-word
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' backward-kill-line
-bindkey -s '^A' 'bc -l\n'
-bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
-bindkey -s '^F' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
 
 setopt histignoredups
 setopt SHARE_HISTORY
@@ -77,12 +77,6 @@ zinit light MichaelAquilina/zsh-you-should-use
 
 # Zsh Autosuggestions
 zinit light zsh-users/zsh-autosuggestions
-
-# Zsh PS1 line
-zinit light romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ ! -f "$ZDOTDIR/.p10k.zsh" ]] || source "$ZDOTDIR/.p10k.zsh"
 
 # Bindkey setup remains the same, as it's a Zsh builtin configuration, not plugin specific
 bindkey '^[	' autosuggest-accept

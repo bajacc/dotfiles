@@ -14,6 +14,13 @@ cd dotfiles
 stow --no-folding mac -t $HOME
 ```
 
+### deploy the dotfiles on debian
+
+```console
+cd dotfiles
+stow --no-folding debian -t $HOME
+```
+
 ### find broken links
 
 ```console
