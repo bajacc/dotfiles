@@ -12,7 +12,7 @@ setopt interactive_comments
 setopt prompt_subst
 
 # Fancy prompt, styled after the default Debian bashrc:
-PROMPT='${debian_chroot:+($debian_chroot)}%F{green}%n@%m%f:%F{blue}%~%f%# '
+PROMPT='${debian_chroot:+($debian_chroot)}%F{green}%n@%m%f:%F{blue}%~ %(#.#.$)%f '
 
 # History in cache directory:
 HISTSIZE=10000000
