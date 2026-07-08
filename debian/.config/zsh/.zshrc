@@ -11,14 +11,11 @@ autoload -U colors && colors	# Load colors
 setopt interactive_comments
 setopt prompt_subst
 
-# Set up LS_COLORS, styled after the default Debian bashrc:
-if command -v dircolors &>/dev/null; then
-    if [[ -r "$HOME/.dircolors" ]]; then
-        eval "$(dircolors -b "$HOME/.dircolors")"
-    else
-        eval "$(dircolors -b)"
-    fi
-fi
+# Set up LS_COLORS: use dircolors if it produces something, otherwise fall back
+# to GNU ls's default type-based colors (dircolors -b needs /etc/DIR_COLORS or a
+# compiled-in default, neither of which is guaranteed to be present).
+command -v dircolors &>/dev/null && eval "$(dircolors -b)"
+[[ -z "$LS_COLORS" ]] && export LS_COLORS='di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32'
 
 # Fancy prompt, styled after the default Debian bashrc:
 PROMPT='${debian_chroot:+($debian_chroot)}%B%F{green}%n@%m%f%b:%B%F{blue}%~ %(#.#.$)%f%b '
