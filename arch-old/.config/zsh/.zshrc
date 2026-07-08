@@ -21,7 +21,7 @@ precmd() { echo -ne "\e[6 q" }
 autoload -U compinit
 zstyle ':completion:*' menu select
 
-eval "$(fzf --zsh)"
+source <(fzf --zsh)
 export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
 export FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 

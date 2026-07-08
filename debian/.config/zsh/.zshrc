@@ -25,7 +25,13 @@ autoload -U compinit
 zstyle ':completion:*' menu select
 
 if command -v fzf &>/dev/null; then
-    eval "$(fzf --zsh)"
+    if fzf --zsh &>/dev/null; then
+        source <(fzf --zsh)
+    else
+        # older fzf packages (e.g. Debian's apt package) don't support `fzf --zsh`
+        [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+        [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+    fi
     FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 fi
 
