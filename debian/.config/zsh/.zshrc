@@ -11,6 +11,15 @@ autoload -U colors && colors	# Load colors
 setopt interactive_comments
 setopt prompt_subst
 
+# Set up LS_COLORS, styled after the default Debian bashrc:
+if command -v dircolors &>/dev/null; then
+    if [[ -r "$HOME/.dircolors" ]]; then
+        eval "$(dircolors -b "$HOME/.dircolors")"
+    else
+        eval "$(dircolors -b)"
+    fi
+fi
+
 # Fancy prompt, styled after the default Debian bashrc:
 PROMPT='${debian_chroot:+($debian_chroot)}%B%F{green}%n@%m%f%b:%B%F{blue}%~ %(#.#.$)%f%b '
 
