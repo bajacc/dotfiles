@@ -23,8 +23,10 @@ HISTFILE="$ZDOTDIR/history"
 autoload -U compinit
 zstyle ':completion:*' menu select
 
-eval "$(fzf --zsh)"
-FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+if command -v fzf &>/dev/null; then
+    eval "$(fzf --zsh)"
+    FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+fi
 
 zmodload zsh/complist
 compinit
