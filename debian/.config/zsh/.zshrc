@@ -39,6 +39,23 @@ if command -v fzf &>/dev/null; then
         [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
     fi
     FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
+    fzf-cd-widget() {
+      command -v fzf &>/dev/null || return
+      local file dir
+      file="$(eval "fzf ${FZF_CTRL_T_OPTS}" < /dev/tty)"
+      if [[ -n "$file" ]]; then
+        dir="$(dirname "$file")"
+        cd "$dir"
+        local f
+        for f in "${precmd_functions[@]}"; do
+          "$f"
+        done
+      fi
+      zle reset-prompt
+    }
+    zle -N fzf-cd-widget
+    bindkey '^F' fzf-cd-widget
 fi
 
 zmodload zsh/complist

@@ -23,8 +23,33 @@ HISTFILE="$ZDOTDIR/history"
 autoload -U compinit
 zstyle ':completion:*' menu select
 
-source <(fzf --zsh)
-FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+if command -v fzf &>/dev/null; then
+    if fzf --zsh &>/dev/null; then
+        source <(fzf --zsh)
+    else
+        # older fzf packages (e.g. Debian's apt package) don't support `fzf --zsh`
+        [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+        [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+    fi
+    FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
+    fzf-cd-widget() {
+      command -v fzf &>/dev/null || return
+      local file dir
+      file="$(eval "fzf ${FZF_CTRL_T_OPTS}" < /dev/tty)"
+      if [[ -n "$file" ]]; then
+        dir="$(dirname "$file")"
+        cd "$dir"
+        local f
+        for f in "${precmd_functions[@]}"; do
+          "$f"
+        done
+      fi
+      zle reset-prompt
+    }
+    zle -N fzf-cd-widget
+    bindkey '^F' fzf-cd-widget
+fi
 
 zmodload zsh/complist
 compinit
@@ -39,7 +64,6 @@ bindkey '^[[F' end-of-line
 bindkey '^[[3~' backward-kill-line
 bindkey -s '^A' 'bc -l\n'
 bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
-bindkey -s '^F' 'cd "$(dirname "$(eval "fzf ${FZF_CTRL_T_OPTS}")")"\n'
 
 setopt histignoredups
 setopt SHARE_HISTORY
