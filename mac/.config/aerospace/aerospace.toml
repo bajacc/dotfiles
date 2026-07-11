@@ -76,9 +76,9 @@ cmd-3 = 'workspace 3'  # VSCode
 cmd-4 = 'workspace 4'  # Obsidian
 cmd-5 = 'workspace 5'  # Chat (slack, Discord, etc.)
 cmd-6 = 'workspace 6'  # Teams
-cmd-7 = 'workspace 7'  # 
-cmd-8 = 'workspace 8'  # 
-cmd-9 = 'workspace 9'  # 
+cmd-7 = 'workspace 7'  #
+cmd-8 = 'workspace 8'  #
+cmd-9 = 'workspace 9'  #
 cmd-0 = 'workspace 10' # Settings
 
 cmd-shift-1 = 'move-node-to-workspace 1'
@@ -104,6 +104,11 @@ enter = 'mode main'
 esc = 'mode main'
 alt-r = 'mode main'
 
+# Workspace 10 lives on the secondary monitor when one is plugged in.
+# With a single monitor, 'secondary' falls back to the main monitor.
+[workspace-to-monitor-force-assignment]
+10 = 'secondary'
+
 [gaps]
     inner.horizontal = 0
     inner.vertical =   0
@@ -121,6 +126,13 @@ run = [
 # Alacritty in Workspace 1
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
+run = [
+  'move-node-to-workspace --focus-follows-window 1',
+]
+
+# iTerm2 in Workspace 1
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
 run = [
   'move-node-to-workspace --focus-follows-window 1',
 ]
