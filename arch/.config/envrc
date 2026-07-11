@@ -27,4 +27,3 @@ export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
 # Adds to $PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
-export PATH="$GOROOT/bin:$PATH"

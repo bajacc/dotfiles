@@ -6,20 +6,27 @@ alias \
 	mv="mv -v" \
 	rm="rm -vI" \
 	mkd="mkdir -pv" \
-	yt="youtube-dl --add-metadata -i" \
+	yt="yt-dlp --add-metadata -i" \
 	yta="yt -x -f bestaudio/best" \
 	ffmpeg="ffmpeg -hide_banner" \
-	vim="nvim" \
+	vim="nvim"
 
 # Colorize commands when possible.
 alias \
 	ls="ls -hG" \
 	grep="grep --color=auto" \
+	fgrep="fgrep --color=auto" \
+	egrep="egrep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi"
 
+# ls shortcuts
 alias \
-	tmux="tmux -f \$XDG_CONFIG_HOME/tmux/tmux.conf" \
+	ll="ls -alF" \
+	la="ls -A" \
+	l="ls -CF"
+
+alias tmux="tmux -f \$XDG_CONFIG_HOME/tmux/tmux.conf"
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias mapscii="telnet mapscii.me"

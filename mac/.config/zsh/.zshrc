@@ -63,7 +63,7 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' backward-kill-line
 bindkey -s '^A' 'bc -l\n'
-bindkey -s '^N' 'rax2 -r "$(xclip -o)"\n'
+bindkey -s '^N' 'rax2 -r "$(pbpaste)"\n'
 
 setopt histignoredups
 setopt SHARE_HISTORY

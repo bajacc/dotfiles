@@ -19,7 +19,7 @@ export XDG_CODE_DIR="$HOME/code"
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 export BROWSER="chrome"
-export READER="atril"
+export READER="open"
 
 # applications specific settings:
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
@@ -33,7 +33,6 @@ export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
-export PATH="$GOROOT/bin:$PATH"
 
 # use GNU tar by default
 export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
