@@ -33,6 +33,7 @@ export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/.local/share/cargo/bin:$PATH"
 
 # use GNU tar by default
 export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
