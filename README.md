@@ -49,7 +49,7 @@ brew install git curl fzf stow neovim bat
 
 Log out and back in (or open a new terminal) to pick up the shell change, then deploy the dotfiles for your platform (see above). On the first launch, `.zshrc` will automatically clone [zinit](https://github.com/zdharma-continuum/zinit) and its plugins — this only happens once.
 
-If you're using powerlevel10k (arch/mac), install a [Nerd Font](https://www.nerdfonts.com/) and set it as your terminal's font so prompt icons render correctly, then run `p10k configure` to customize the prompt.
+If you're using powerlevel10k (mac), install a [Nerd Font](https://www.nerdfonts.com/) and set it as your terminal's font so prompt icons render correctly, then run `p10k configure` to customize the prompt.
 
 ### find broken links
 
