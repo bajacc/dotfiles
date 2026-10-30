@@ -1,18 +1,11 @@
 #!/bin/bash
+# Open an Alacritty window with a random dark background and opacity.
 set -eu
 
-VENV_DIR="$HOME/.config/aerospace/venv"
-VENV_PY="$VENV_DIR/bin/python"
-SCRIPT="$HOME/.config/aerospace/alacritty.py"
+c() { printf '%02x' $(( RANDOM % 4 * 8 )); }
+color="#$(c)$(c)$(c)"
+opacity="0.$(( 70 + RANDOM % 16 ))"
 
-# Create venv if it does not exist
-if [ ! -x "$VENV_PY" ]; then
-    echo "[+] Creating venv at $VENV_DIR"
-    python3 -m venv "$VENV_DIR"
-fi
-echo "[+] Ensuring dependencies"
-"$VENV_PY" -m pip install --upgrade pip
-"$VENV_PY" -m pip install toml
-
-# Replace shell with the script (no extra process)
-exec "$VENV_PY" "$SCRIPT" "$@"
+exec open -na Alacritty --args \
+  -o "colors.primary.background=\"$color\"" \
+  -o "window.opacity=$opacity" "$@"

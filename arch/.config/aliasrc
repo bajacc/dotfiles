@@ -1,10 +1,12 @@
 #!/bin/sh
 
 # Verbosity and settings that you pretty much just always are going to want.
+# Claude Code loads these aliases; an interactive rm -I would make its deletes hang or no-op.
+if [ -z "$CLAUDECODE" ]; then
+	alias cp="cp -v" mv="mv -v" rm="rm -vI"
+fi
+
 alias \
-	cp="cp -v" \
-	mv="mv -v" \
-	rm="rm -vI" \
 	mkd="mkdir -pv" \
 	yt="yt-dlp --add-metadata -i" \
 	yta="yt -x -f bestaudio/best" \
