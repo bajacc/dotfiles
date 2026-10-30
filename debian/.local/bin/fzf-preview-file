@@ -2,10 +2,12 @@
 
 file="$1"
 
-if command -v bat >/dev/null 2>&1; then
-	bat_cmd="bat"
+if [ -d "$file" ]; then
+	ls -A "$file"
+elif command -v bat >/dev/null 2>&1; then
+	bat --style=numbers --color=always --line-range :500 "$file"
+elif command -v batcat >/dev/null 2>&1; then
+	batcat --style=numbers --color=always --line-range :500 "$file"
 else
-	bat_cmd="batcat"
+	head -n 500 "$file"
 fi
-
-"$bat_cmd" --style=numbers --color=always --line-range :500 "$file"

@@ -1,3 +1,5 @@
+# envrc runs again in every nested shell (e.g. tmux panes); keep PATH entries unique.
+typeset -U PATH path
 source ~/.config/aliasrc
 source ~/.config/envrc
 

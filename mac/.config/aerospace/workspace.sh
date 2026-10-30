@@ -9,7 +9,7 @@ get_focused_window() {
 }
 
 get_current_workspace() {
-    aerospace list-windows --focused --format "%{workspace}"
+    aerospace list-workspaces --focused
 }
 
 # Function to move other windows away

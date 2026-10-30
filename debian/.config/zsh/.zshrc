@@ -1,3 +1,5 @@
+# envrc runs again in every nested shell (e.g. tmux panes); keep PATH entries unique.
+typeset -U PATH path
 source ~/.config/aliasrc
 source ~/.config/envrc
 
@@ -40,12 +42,16 @@ if command -v fzf &>/dev/null; then
     fi
     FZF_CTRL_T_OPTS="--preview 'fzf-preview-file {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 
-    fzf-cd-widget() {
+    fzf-file-cd-widget() {
       command -v fzf &>/dev/null || return
       local file dir
       file="$(eval "fzf ${FZF_CTRL_T_OPTS}" < /dev/tty)"
       if [[ -n "$file" ]]; then
-        dir="$(dirname "$file")"
+        if [[ -d "$file" ]]; then
+          dir="$file"
+        else
+          dir="$(dirname "$file")"
+        fi
         cd "$dir"
         local f
         for f in "${precmd_functions[@]}"; do
@@ -54,8 +60,8 @@ if command -v fzf &>/dev/null; then
       fi
       zle reset-prompt
     }
-    zle -N fzf-cd-widget
-    bindkey '^F' fzf-cd-widget
+    zle -N fzf-file-cd-widget
+    bindkey '^F' fzf-file-cd-widget
 fi
 
 zmodload zsh/complist

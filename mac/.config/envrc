@@ -28,7 +28,6 @@ export GOPATH="$XDG_DATA_HOME/go"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 55%"
 
 # Adds to $PATH
-export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
@@ -37,3 +36,6 @@ export PATH="$HOME/.local/share/cargo/bin:$PATH"
 
 # use GNU tar by default
 export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+
+# personal scripts take precedence over everything else
+export PATH="$HOME/.local/bin:$PATH"
